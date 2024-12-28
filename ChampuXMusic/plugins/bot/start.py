@@ -93,7 +93,7 @@ async def start_pm(client, message: Message, _):
                     message.chat.photo.big_file_id,
                 )
             else:
-                userss_photo = "https://envs.sh/oBb.mp4"
+                userss_photo = "https://envs.sh/oBq.mp4"
             if userss_photo:
                 chat_photo = userss_photo
             chat_photo = userss_photo if userss_photo else config.START_IMG_URL
