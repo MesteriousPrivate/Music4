@@ -93,13 +93,13 @@ async def start_pm(client, message: Message, _):
                     message.chat.photo.big_file_id,
                 )
             else:
-                userss_photo = "ChampuXMusic/assets/nodp.jpg"
+                userss_photo = "https://envs.sh/oBb.mp4"
             if userss_photo:
                 chat_photo = userss_photo
             chat_photo = userss_photo if userss_photo else config.START_IMG_URL
 
         except AttributeError:
-            chat_photo = "ChampuXMusic/assets/nodp.jpg"
+            chat_photo = "https://envs.sh/oBb.mp4"
         await message.reply_photo(
             photo=chat_photo,
             caption=_["start_2"].format(message.from_user.mention, app.mention),
