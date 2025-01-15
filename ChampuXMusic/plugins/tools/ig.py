@@ -3,7 +3,7 @@ import requests
 from pyrogram import filters
 
 from ChampuXMusic import app
-from config import LOG_GROUP_ID
+from config import LOGGER_ID
 
 
 @app.on_message(filters.command(["ig", "instagram", "reel"]))
@@ -33,8 +33,8 @@ async def download_instagram_video(client, message):
             await a.edit(f)
         except Exception:
             await message.reply_text(f)
-            return await app.send_message(LOG_GROUP_ID, f)
-        return await app.send_message(LOG_GROUP_ID, f)
+            return await app.send_message(LOGGER_ID, f)
+        return await app.send_message(LOGGER_ID, f)
     if not result["error"]:
         video_url = data["url"]
         duration = data["duration"]
