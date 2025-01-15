@@ -1,4 +1,5 @@
 import time
+import random
 
 from pyrogram import filters
 from pyrogram.enums import ChatType
@@ -21,7 +22,7 @@ from ChampuXMusic.utils.database import (
 from ChampuXMusic.utils.decorators.language import LanguageStart
 from ChampuXMusic.utils.formatters import get_readable_time
 from ChampuXMusic.utils.inline import alive_panel, help_pannel, private_panel, start_panel
-from config import BANNED_USERS
+from config import BANNED_USERS, VIDEO_URLS
 from strings import get_string
 
 
@@ -43,7 +44,7 @@ async def start_pm(client, message: Message, _):
             if await is_on_off(2):
                 return await app.send_message(
                     chat_id=config.LOGGER_ID,
-                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>sᴜᴅᴏʟɪsᴛ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                    text=f"{message.from_user.mention} just started the bot to check <b>sudolist</b>.\n\n<b>User ID :</b> <code>{message.from_user.id}</code>\n<b>Username :</b> @{message.from_user.username}",
                 )
             return
         if name[0:3] == "inf":
@@ -81,36 +82,24 @@ async def start_pm(client, message: Message, _):
             if await is_on_off(2):
                 return await app.send_message(
                     chat_id=config.LOGGER_ID,
-                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                    text=f"{message.from_user.mention} just started the bot to check <b>track information</b>.\n\n<b>User ID :</b> <code>{message.from_user.id}</code>\n<b>Username :</b> @{message.from_user.username}",
                 )
     else:
+        # Select a random video URL
+        random_video = random.choice(VIDEO_URLS)
 
-        try: 
-            out = private_panel(_)
-            if message.chat.photo:
-
-                userss_photo = await app.download_media(
-                    message.chat.photo.big_file_id,
-                )
-            else:
-                userss_photo = "https://envs.sh/oBq.mp4"
-            if userss_photo:
-                chat_photo = userss_photo
-            chat_photo = userss_photo if userss_photo else config.START_IMG_URL
-
-        except AttributeError:
-            chat_photo = "https://envs.sh/oBb.mp4"
-        await message.reply_photo(
-            photo=chat_photo,
+        # Reply with random video
+        await message.reply_video(
+            video=random_video,
             caption=_["start_2"].format(message.from_user.mention, app.mention),
-            reply_markup=InlineKeyboardMarkup(out),
+            reply_markup=InlineKeyboardMarkup(private_panel(_)),
         )
         if await is_on_off(2):
             sender_id = message.from_user.id
             sender_name = message.from_user.first_name
             return await app.send_message(
                 config.LOGGER_ID,
-                f"{message.from_user.mention} ʜᴀs sᴛᴀʀᴛᴇᴅ ʙᴏᴛ. \n\n**ᴜsᴇʀ ɪᴅ :** {sender_id}\n**ᴜsᴇʀ ɴᴀᴍᴇ:** {sender_name}",
+                f"{message.from_user.mention} has started the bot.\n\n**User ID:** {sender_id}\n**Username:** {sender_name}",
             )
 
 
@@ -118,37 +107,22 @@ async def start_pm(client, message: Message, _):
 @LanguageStart
 async def testbot(client, message: Message, _):
     try:
-        chat_id = message.chat.id
-        try:
-            # Try downloading the group's photo
-            groups_photo = await client.download_media(
-                message.chat.photo.big_file_id, file_name=f"chatpp{chat_id}.png"
-            )
-            chat_photo = groups_photo if groups_photo else config.START_IMG_URL
-        except AttributeError:
-            # If there's no chat photo, use the default image
-            chat_photo = config.START_IMG_URL
+        # Select a random video URL
+        random_video = random.choice(VIDEO_URLS)
 
         # Get the alive panel and uptime
         out = alive_panel(_)
         uptime = int(time.time() - _boot_)
 
-        # Send the response with the group photo or fallback to START_IMG_URL
-        if chat_photo:
-            await message.reply_photo(
-                photo=chat_photo,
-                caption=_["start_7"].format(client.mention, get_readable_time(uptime)),
-                reply_markup=InlineKeyboardMarkup(out),
-            )
-        else:
-            await message.reply_photo(
-                photo=config.START_IMG_URL,
-                caption=_["start_7"].format(client.mention, get_readable_time(uptime)),
-                reply_markup=InlineKeyboardMarkup(out),
-            )
+        # Send the random video
+        await message.reply_video(
+            video=random_video,
+            caption=_["start_7"].format(client.mention, get_readable_time(uptime)),
+            reply_markup=InlineKeyboardMarkup(out),
+        )
 
         # Add the chat to the served chat list
-        return await add_served_chat(chat_id)
+        return await add_served_chat(message.chat.id)
 
     except Exception as e:
         print(f"Error: {e}")
@@ -165,18 +139,11 @@ async def welcome(client, message: Message):
 
             # If bot itself joins the chat
             if member.id == client.id:
-                try:
-                    groups_photo = await client.download_media(
-                        message.chat.photo.big_file_id, file_name=f"chatpp{chat_id}.png"
-                    )
-                    chat_photo = groups_photo if groups_photo else config.START_IMG_URL
-                except AttributeError:
-                    chat_photo = config.START_IMG_URL
-
+                random_video = random.choice(VIDEO_URLS)
                 userbot = await get_assistant(chat_id)
                 out = alive_panel(_)
-                await message.reply_photo(
-                    photo=chat_photo,
+                await message.reply_video(
+                    video=random_video,
                     caption=_["start_8"],
                     reply_markup=InlineKeyboardMarkup(out),
                 )
@@ -197,4 +164,3 @@ async def welcome(client, message: Message):
         except Exception as e:
             print(f"Error: {e}")
             return
-
