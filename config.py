@@ -3,6 +3,7 @@ from os import getenv
 
 from dotenv import load_dotenv
 from pyrogram import filters
+import random
 
 load_dotenv()
 
@@ -78,10 +79,24 @@ votemode = {}
 autoclean = []
 confirmer = {}
 
+# List of video URLs
+VIDEO_URLS = [
+    "https://envs.sh/vJC.mp4",
+    "https://envs.sh/vJ5.mp4",
+    "https://envs.sh/vJY.mp4",
+    "https://envs.sh/vJz.mp4",
+    "https://envs.sh/vJK.mp4",
+    "https://envs.sh/vJL.mp4",
+    "https://envs.sh/vJZ.mp4",
+    "https://envs.sh/vJc.mp4",
+    "https://envs.sh/vJj.mp4",
+    "https://envs.sh/vJA.mp4",
+    "https://envs.sh/vJ_.mp4",
+]
 
-START_IMG_URL = getenv(
-    "START_IMG_URL", "https://envs.sh/9qZ.jpg"
-)
+# Randomly select a video URL
+START_IMG_URL = random.choice(VIDEO_URLS)
+
 PING_IMG_URL = getenv(
     "PING_IMG_URL", "https://graph.org/file/15fde98db07a70beb6f4a.jpg"
 )
