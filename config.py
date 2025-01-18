@@ -117,8 +117,6 @@ SPOTIFY_ALBUM_IMG_URL = "https://graph.org/file/9553b762fd6a2aaf7ab0a.jpg"
 SPOTIFY_PLAYLIST_IMG_URL = "https://graph.org/file/08b0f34c8012e2e231978.jpg"
 
 
-TEMP_DB_FOLDER = os.path.join(os.getcwd(), "temp_db")
-
 def time_to_seconds(time):
     stringt = str(time)
     return sum(int(x) * 60**i for i, x in enumerate(reversed(stringt.split(":"))))
