@@ -97,6 +97,10 @@ VIDEO_URLS = [
     "https://envs.sh/NMW.mp4",
     "https://envs.sh/NMS.mp4",
     "https://envs.sh/v9J.mp4",
+    "https://envs.sh/HEF.mp4",
+    "https://envs.sh/HEt.mp4",
+    "https://envs.sh/HEe.mp4",
+    "https://envs.sh/HEi.mp4",
 ]
 
 # Randomly select a video URL
