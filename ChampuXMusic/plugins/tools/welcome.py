@@ -33,7 +33,9 @@ def circle(pfp, size=(450, 450)):
     return pfp
 
 def welcomepic(pic, user, chat, id, uname):
-    background = Image.open("assets/welcome.png")
+    background_url = "https://envs.sh/ggI.jpg"
+response = requests.get(background_url)
+background = Image.open(BytesIO(response.content))  # Load image from URL
     pfp = Image.open(pic).convert("RGBA")
     pfp = circle(pfp)
     pfp = pfp.resize(
