@@ -11,18 +11,24 @@ from pyrogram.types import (
 from ChampuXMusic import app
 from ChampuXMusic.utils.database import (
     add_nonadmin_chat,
+    cleanmode_off,
+    cleanmode_on,
+    commanddelete_off,
+    commanddelete_on,
+    get_aud_bit_name,
     get_authuser,
     get_authuser_names,
     get_playmode,
     get_playtype,
+    get_vid_bit_name,
+    is_cleanmode_on,
+    is_commanddelete_on,
     is_nonadmin_chat,
-    is_skipmode,
     remove_nonadmin_chat,
+    save_audio_bitrate,
+    save_video_bitrate,
     set_playmode,
     set_playtype,
-    set_upvotes,
-    skip_off,
-    skip_on,
 )
 from ChampuXMusic.utils.decorators.admins import ActualAdminCB
 from ChampuXMusic.utils.decorators.language import language, languageCB
