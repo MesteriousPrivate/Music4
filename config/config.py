@@ -3,6 +3,7 @@ from os import getenv
 
 from dotenv import load_dotenv
 from pyrogram import filters
+import random
 
 load_dotenv()
 
@@ -16,7 +17,7 @@ BOT_TOKEN = getenv("BOT_TOKEN")
 # Get your mongo url from cloud.mongodb.com
 MONGO_DB_URI = getenv("MONGO_DB_URI", None)
 
-DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 60))
+DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 900))
 
 # Chat id of a group for logging bot's activities
 LOGGER_ID = int(getenv("LOGGER_ID", None))
@@ -84,10 +85,37 @@ votemode = {}
 autoclean = []
 confirmer = {}
 
+# List of video URLs
+VIDEO_URLS = [
+    "https://envs.sh/vJC.mp4",
+    "https://envs.sh/vJ5.mp4",
+    "https://envs.sh/vJY.mp4",
+    "https://envs.sh/vJz.mp4",
+    "https://envs.sh/vJK.mp4",
+    "https://envs.sh/vJL.mp4",
+    "https://envs.sh/vJZ.mp4",
+    "https://envs.sh/vJc.mp4",
+    "https://envs.sh/vJj.mp4",
+    "https://envs.sh/vJA.mp4",
+    "https://envs.sh/vJ_.mp4",
+    "https://envs.sh/v9J.mp4",
+    "https://envs.sh/NMB.mp4",
+    "https://envs.sh/NMW.mp4",
+    "https://envs.sh/NMS.mp4",
+    "https://envs.sh/v9J.mp4",
+    "https://envs.sh/HEF.mp4",
+    "https://envs.sh/HEt.mp4",
+    "https://envs.sh/HEe.mp4",
+    "https://envs.sh/HEi.mp4",
+    "https://envs.sh/fzk.mp4",
+    "https://envs.sh/fzl.mp4",
+    "https://envs.sh/fNm.mp4",
+    "https://envs.sh/fNy.mp4",
+]
 
-START_IMG_URL = getenv(
-    "START_IMG_URL", "https://envs.sh/9qZ.jpg"
-)
+# Randomly select a video URL
+START_IMG_URL = random.choice(VIDEO_URLS)
+
 PING_IMG_URL = getenv(
     "PING_IMG_URL", "https://graph.org/file/15fde98db07a70beb6f4a.jpg"
 )
@@ -122,4 +150,3 @@ if SUPPORT_CHAT:
         raise SystemExit(
             "[ERROR] - Your SUPPORT_CHAT url is wrong. Please ensure that it starts with https://"
         )
-      
