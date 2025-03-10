@@ -1,5 +1,5 @@
 from pyrogram import Client, filters, enums
-from SONALI import app
+from ChampuXMusic import app
 import shutil
 from typing import List
 import asyncio
