@@ -5,7 +5,7 @@ from pyrogram.types import (
     InlineKeyboardMarkup, InlineKeyboardButton
 )
 
-from utils.permissions import unauthorised
+from ChampuXMusic.utils.permissions import unauthorised
 
 BOT_USERNAME = app.username
 
