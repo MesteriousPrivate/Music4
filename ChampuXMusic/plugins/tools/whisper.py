@@ -16,6 +16,7 @@ switch_btn = InlineKeyboardMarkup([[InlineKeyboardButton("💒 sᴛᴀʀᴛ ᴡ�
 async def _whisper(_, inline_query):
     data = inline_query.query
     results = []
+    mm = []  # Ensure mm is always initialized
     
     if len(data.split()) < 2:
         mm = [
@@ -31,25 +32,13 @@ async def _whisper(_, inline_query):
         try:
             user_id = data.split()[0]
             msg = data.split(None, 1)[1]
-        except IndexError as e:
-            pass
-        
-        try:
             user = await _.get_users(user_id)
-        except:
-            mm = [
-                InlineQueryResultArticle(
-                    title="💒 ᴡʜɪsᴘᴇʀ",
-                    description="ɪɴᴠᴀʟɪᴅ ᴜsᴇʀɴᴀᴍᴇ ᴏʀ ɪᴅ!",
-                    input_message_content=InputTextMessageContent("ɪɴᴠᴀʟɪᴅ ᴜsᴇʀɴᴀᴍᴇ ᴏʀ ɪᴅ!"),
-                    thumb_url="https://telegra.ph/file/cef50394cb41a2bdb4121.jpg",
-                    reply_markup=switch_btn
-                )
-            ]
-        
-        try:
+            
             whisper_btn = InlineKeyboardMarkup([[InlineKeyboardButton("💒 ᴡʜɪsᴘᴇʀ", callback_data=f"fdaywhisper_{inline_query.from_user.id}_{user.id}")]])
             one_time_whisper_btn = InlineKeyboardMarkup([[InlineKeyboardButton("🔩 ᴏɴᴇ-ᴛɪᴍᴇ ᴡʜɪsᴘᴇʀ", callback_data=f"fdaywhisper_{inline_query.from_user.id}_{user.id}_one")]])
+
+            whisper_db[f"{inline_query.from_user.id}_{user.id}"] = msg
+
             mm = [
                 InlineQueryResultArticle(
                     title="💒 ᴡʜɪsᴘᴇʀ",
@@ -66,14 +55,18 @@ async def _whisper(_, inline_query):
                     reply_markup=one_time_whisper_btn
                 )
             ]
-        except:
-            pass
-        
-        try:
-            whisper_db[f"{inline_query.from_user.id}_{user.id}"] = msg
-        except:
-            pass
-    
+        except Exception as e:
+            print(f"Error: {e}")
+            mm = [
+                InlineQueryResultArticle(
+                    title="💒 ᴡʜɪsᴘᴇʀ",
+                    description="ɪɴᴠᴀʟɪᴅ ᴜsᴇʀɴᴀᴍᴇ ᴏʀ ɪᴅ!",
+                    input_message_content=InputTextMessageContent("ɪɴᴠᴀʟɪᴅ ᴜsᴇʀɴᴀᴍᴇ ᴏʀ ɪᴅ!"),
+                    thumb_url="https://telegra.ph/file/cef50394cb41a2bdb4121.jpg",
+                    reply_markup=switch_btn
+                )
+            ]
+
     results.append(mm)
     return results
 
