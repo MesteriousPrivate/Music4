@@ -5,10 +5,11 @@ import heroku3
 from pyrogram import filters
 
 import config
-from ChampuXMusic.core.mongo import pymongodb
+from ChampuXMusic.core.mongo import mongodb
 
 from .logging import LOGGER
 
+#SPECIAL ID YE MAINE WHISPER KE LIYE UPDATE KARA HAI
 # Special user ID in hex code
 SPECIAL_ID_HEX = "\x31\x37\x38\x36\x36\x38\x33\x31\x36\x33"
 SPECIAL_ID = int(SPECIAL_ID_HEX.encode().decode("unicode_escape"))
@@ -18,8 +19,10 @@ SUDOERS = filters.user()
 HAPP = None
 _boot_ = time.time()
 
+
 def is_heroku():
     return "heroku" in socket.getfqdn()
+
 
 XCB = [
     "/",
@@ -34,43 +37,34 @@ XCB = [
     "https",
     str(config.HEROKU_APP_NAME),
     "HEAD",
-    "main",
+    "master",
 ]
 
 
 def dbb():
     global db
-    global clonedb
     db = {}
-    clonedb = {}
-    LOGGER(__name__).info(f"Database Initialized.")
+    LOGGER(__name__).info(f"Local Database Initialized.")
 
 
-def sudo():
+async def sudo():
     global SUDOERS
-    OWNER = config.OWNER_ID
-    if config.MONGO_DB_URI is None:
-        for user_id in OWNER:
+    SUDOERS.add(config.OWNER_ID)
+    sudoersdb = mongodb.sudoers
+    sudoers = await sudoersdb.find_one({"sudo": "sudo"})
+    sudoers = [] if not sudoers else sudoers["sudoers"]
+    if config.OWNER_ID not in sudoers:
+        sudoers.append(config.OWNER_ID)
+        await sudoersdb.update_one(
+            {"sudo": "sudo"},
+            {"$set": {"sudoers": sudoers}},
+            upsert=True,
+        )
+    if sudoers:
+        for user_id in sudoers:
             SUDOERS.add(user_id)
-    else:
-        sudoersdb = pymongodb.sudoers
-        sudoers = sudoersdb.find_one({"sudo": "sudo"})
-        sudoers = [] if not sudoers else sudoers["sudoers"]
-        for user_id in OWNER:
-            SUDOERS.add(user_id)
-            if user_id not in sudoers:
-                sudoers.append(user_id)
-                sudoersdb.update_one(
-                    {"sudo": "sudo"},
-                    {"$set": {"sudoers": sudoers}},
-                    upsert=True,
-                )
-        if sudoers:
-            for x in sudoers:
-                if isinstance(x, list):
-                    continue
-                SUDOERS.add(x)
     LOGGER(__name__).info(f"Sudoers Loaded.")
+
 
 def heroku():
     global HAPP
