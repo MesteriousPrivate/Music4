@@ -73,7 +73,7 @@ async def load_caches():
 # ✅ Chatbot ON/OFF Status Check Function
 async def is_chat_enabled(chat_id: int) -> bool:
     chat = await chatbot_settings.find_one({"chat_id": chat_id})
-    return chat and chat.get("enabled", False)  # ✅ Default: OFF
+    return chat and chat.get("enabled", True)  # ✅ Default: OFF
 
 # ✅ Chatbot ON/OFF Set Karne Ka Function
 async def set_chat_status(chat_id: int, status: bool):
