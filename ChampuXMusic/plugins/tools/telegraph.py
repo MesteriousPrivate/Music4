@@ -1,8 +1,8 @@
 import os
+import requests
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from ChampuXMusic import app
-import requests
 
 
 def upload_file(file_path):
@@ -14,14 +14,14 @@ def upload_file(file_path):
     if response.status_code == 200:
         return True, response.text.strip()
     else:
-        return False, f"ᴇʀʀᴏʀ: {response.status_code} - {response.text}"
+        return False, f"Error: {response.status_code} - {response.text}"
 
 
 @app.on_message(filters.command(["tgm"]))
 async def get_link_group(client, message):
     if not message.reply_to_message:
         return await message.reply_text(
-            "Pʟᴇᴀsᴇ ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇᴅɪᴀ ᴛᴏ ᴜᴘʟᴏᴀᴅ ᴏɴ Tᴇʟᴇɢʀᴀᴘʜ"
+            "Pʟᴇᴀsᴇ ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇᴅɪᴀ ᴛᴏ ᴜᴘʟᴏᴀᴅ ᴏɴ CᴀᴛBᴏx"
         )
 
     media = message.reply_to_message
@@ -47,27 +47,22 @@ async def get_link_group(client, message):
 
         try:
             local_path = await media.download(progress=progress)
-            await text.edit_text("📤 Uᴘʟᴏᴀᴅɪɴɢ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴘʜ...")
+            await text.edit_text("📤 Uᴘʟᴏᴀᴅɪɴɢ ᴛᴏ CᴀᴛBᴏx...")
 
-            success, upload_path = upload_file(local_path)
+            success, upload_url = upload_file(local_path)
 
             if success:
                 await text.edit_text(
-                    f"🌐 | [👉ʏᴏᴜʀ ʟɪɴᴋ ᴛᴀᴘ ʜᴇʀᴇ👈]({upload_path})",
+                    f"🌐 | <a href='{upload_url}'>👉 ʏᴏᴜʀ ʟɪɴᴋ ᴛᴀᴘ ʜᴇʀᴇ 👈</a>",
+                    disable_web_page_preview=True,
+                    parse_mode="html",
                     reply_markup=InlineKeyboardMarkup(
-                        [
-                            [
-                                InlineKeyboardButton(
-                                    " ᴄʀᴇᴀᴛᴇ ʙʏ ɴᴏxx ɴᴇᴛᴡᴏʀᴋ ᴛᴀᴘ ᴛᴏ sᴇᴇ ",
-                                    url=upload_path,
-                                )
-                            ]
-                        ]
+                        [[InlineKeyboardButton("🌍 Tᴀᴘ ᴛᴏ Vɪᴇᴡ", url=upload_url)]]
                     ),
                 )
             else:
                 await text.edit_text(
-                    f"ᴀɴ ᴇʀʀᴏʀ ᴏᴄᴄᴜʀʀᴇᴅ ᴡʜɪʟᴇ ᴜᴘʟᴏᴀᴅɪɴɢ ʏᴏᴜʀ ғɪʟᴇ\n{upload_path}"
+                    f"⚠️ Aɴ ᴇʀʀᴏʀ ᴏᴄᴄᴜʀʀᴇᴅ ᴡʜɪʟᴇ ᴜᴘʟᴏᴀᴅɪɴɢ ʏᴏᴜʀ ғɪʟᴇ\n{upload_url}"
                 )
 
             try:
@@ -84,92 +79,7 @@ async def get_link_group(client, message):
             return
     except Exception:
         pass
-        
-import os
-from pyrogram import filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from ChampuXMusic import app
-import requests
 
-
-def upload_file(file_path):
-    url = "https://catbox.moe/user/api.php"
-    data = {"reqtype": "fileupload", "json": "true"}
-    files = {"fileToUpload": open(file_path, "rb")}
-    response = requests.post(url, data=data, files=files)
-
-    if response.status_code == 200:
-        return True, response.text.strip()
-    else:
-        return False, f"ᴇʀʀᴏʀ: {response.status_code} - {response.text}"
-
-
-@app.on_message(filters.command(["tm"]))
-async def get_link_group(client, message):
-    if not message.reply_to_message:
-        return await message.reply_text(
-            "Pʟᴇᴀsᴇ ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇᴅɪᴀ ᴛᴏ ᴜᴘʟᴏᴀᴅ ᴏɴ Tᴇʟᴇɢʀᴀᴘʜ"
-        )
-
-    media = message.reply_to_message
-    file_size = 0
-    if media.photo:
-        file_size = media.photo.file_size
-    elif media.video:
-        file_size = media.video.file_size
-    elif media.document:
-        file_size = media.document.file_size
-
-    if file_size > 200 * 1024 * 1024:
-        return await message.reply_text("Pʟᴇᴀsᴇ ᴘʀᴏᴠɪᴅᴇ ᴀ ᴍᴇᴅɪᴀ ғɪʟᴇ ᴜɴᴅᴇʀ 200MB.")
-
-    try:
-        text = await message.reply("❍ ʜᴏʟᴅ ᴏɴ ʙᴀʙʏ....♡")
-        async def progress(current, total):
-            try:
-                await text.edit_text(f"📥 Dᴏᴡɴʟᴏᴀᴅɪɴɢ... {current * 100 / total:.1f}%")
-            except Exception:
-                pass
-
-        try:
-            local_path = await media.download(progress=progress)
-            await text.edit_text("📤 Uᴘʟᴏᴀᴅɪɴɢ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴘʜ...")
-
-            success, upload_path = upload_file(local_path)
-
-            if success:
-                await text.edit_text(
-                    f"🌐 | [👉ʏᴏᴜʀ ʟɪɴᴋ ᴛᴀᴘ ʜᴇʀᴇ👈]({upload_path})",
-                    reply_markup=InlineKeyboardMarkup(
-                        [
-                            [
-                                InlineKeyboardButton(
-                                    " ᴄʀᴇᴀᴛᴇ ʙʏ ɴᴏxx ɴᴇᴛᴡᴏʀᴋ ᴛᴀᴘ ᴛᴏ sᴇᴇ ",
-                                    url=upload_path,
-                                )
-                            ]
-                        ]
-                    ),
-                )
-            else:
-                await text.edit_text(
-                    f"ᴀɴ ᴇʀʀᴏʀ ᴏᴄᴄᴜʀʀᴇᴅ ᴡʜɪʟᴇ ᴜᴘʟᴏᴀᴅɪɴɢ ʏᴏᴜʀ ғɪʟᴇ\n{upload_path}"
-                )
-
-            try:
-                os.remove(local_path)
-            except Exception:
-                pass
-
-        except Exception as e:
-            await text.edit_text(f"❌ Fɪʟᴇ ᴜᴘʟᴏᴀᴅ ғᴀɪʟᴇᴅ\n\n<i>Rᴇᴀsᴏɴ: {e}</i>")
-            try:
-                os.remove(local_path)
-            except Exception:
-                pass
-            return
-    except Exception:
-        pass
 
 __HELP__ = """
 **ᴛᴇʟᴇɢʀᴀᴘʜ ᴜᴘʟᴏᴀᴅ ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅs**
@@ -177,9 +87,6 @@ __HELP__ = """
 ᴜsᴇ ᴛʜᴇsᴇ ᴄᴏᴍᴍᴀɴᴅs ᴛᴏ ᴜᴘʟᴏᴀᴅ ᴍᴇᴅɪᴀ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴘʜ:
 
 - `/tgm`: ᴜᴘʟᴏᴀᴅ ʀᴇᴘʟɪᴇᴅ ᴍᴇᴅɪᴀ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴘʜ.
-- `/tgt`: sᴀᴍᴇ ᴀs `/tgm`.
-- `/telegraph`: sᴀᴍᴇ ᴀs `/tgm`.
-- `/tl`: sᴀᴍᴇ ᴀs `/tgm`.
 
 **ᴇxᴀᴍᴘʟᴇ:**
 - ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴘʜᴏᴛᴏ ᴏʀ ᴠɪᴅᴇᴏ ᴡɪᴛʜ `/tgm` ᴛᴏ ᴜᴘʟᴏᴀᴅ ɪᴛ.
@@ -189,4 +96,3 @@ __HELP__ = """
 """
 
 __MODULE__ = "ᴛᴇʟᴇɢʀᴀᴘʜ"
-  
