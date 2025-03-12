@@ -37,14 +37,8 @@ def help_pannel(_, START: Union[bool, int] = None):
                 InlineKeyboardButton(text=_["H_B_15"], callback_data="help_callback hb15"),
             ],
             [
-                InlineKeyboardButton(
-                    text="ᴄʜᴀᴛ ɪɴ ɢᴄ ᴏɴ",
-                    callback_data="chat_gc_on",
-                ),
-                InlineKeyboardButton(
-                    text="ᴄʜᴀᴛ ɪɴ ɢᴄ ᴏғғ",
-                    callback_data="chat_gc_off",
-                ),
+                InlineKeyboardButton(text=_["H_B_16"], callback_data="help_callback hb16"),
+                InlineKeyboardButton(text=_["H_B_17"], callback_data="help_callback hb17"),
             ],
             [
                 InlineKeyboardButton(
@@ -62,32 +56,3 @@ def help_pannel(_, START: Union[bool, int] = None):
         ]
     )
     return upl
-
-
-@app.on_callback_query()
-async def chat_gc_callback(client, callback_query):
-    data = callback_query.data
-
-    if data == "chat_gc_on":
-        await callback_query.answer(
-            "<b>🔹 How to Enable Group Chat?</b>\n\n"
-            "To allow the bot to chat in your group, follow these steps:\n\n"
-            "1️⃣ Make sure the bot is <b>admin</b> in your group.\n"
-            "2️⃣ Type <code>/chat on</code> in the group chat.\n"
-            "3️⃣ The bot will now start responding in the group.\n\n"
-            "<b>✅ If the bot does not reply</b>, check if it has <b>permission to send messages</b>.",
-            show_alert=True,
-            parse_mode="HTML"
-        )
-
-    elif data == "chat_gc_off":
-        await callback_query.answer(
-            "<b>🔹 How to Disable Group Chat?</b>\n\n"
-            "To stop the bot from chatting in your group, follow these steps:\n\n"
-            "1️⃣ Make sure you are an <b>admin</b> in the group.\n"
-            "2️⃣ Type <code>/chat off</code> in the group chat.\n"
-            "3️⃣ The bot will stop responding to messages.\n\n"
-            "❌ <b>If the bot still replies</b>, try removing and adding it back.",
-            show_alert=True,
-            parse_mode="HTML"
-        )
