@@ -6,9 +6,9 @@ from ChampuXMusic import app
 def help_pannel(_, START: Union[bool, int] = None):
     first = [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")]
     second = [InlineKeyboardButton(text=_["BACK_BUTTON"], callback_data="settingsback_helper")]
-
+    
     mark = second if START else first
-
+    
     upl = InlineKeyboardMarkup(
         [
             [
@@ -37,10 +37,6 @@ def help_pannel(_, START: Union[bool, int] = None):
                 InlineKeyboardButton(text=_["H_B_15"], callback_data="help_callback hb15"),
             ],
             [
-                InlineKeyboardButton(text=_["H_B_16"], callback_data="help_callback hb16"),
-                InlineKeyboardButton(text=_["H_B_17"], callback_data="help_callback hb17"),
-            ],
-            [
                 InlineKeyboardButton(
                     text="ᴍᴀᴋᴇ ʏᴏᴜʀ ᴏᴡɴ ᴍᴜsɪᴄ ʙᴏᴛ",
                     url="https://t.me/BlossomXMusicBot?start=help",
@@ -56,3 +52,22 @@ def help_pannel(_, START: Union[bool, int] = None):
         ]
     )
     return upl
+
+
+def help_back_markup(_):
+    return InlineKeyboardMarkup(
+        [
+            [InlineKeyboardButton(text=_["BACK_BUTTON"], callback_data="settings_back_helper")]
+        ]
+    )
+
+
+def private_help_panel(_):
+    return [
+        [
+            InlineKeyboardButton(
+                text=_["S_B_4"],
+                url=f"https://t.me/{app.username}?start=help",
+            )
+        ],
+]
