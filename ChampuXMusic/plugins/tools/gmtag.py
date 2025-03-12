@@ -184,19 +184,29 @@ async def mention_allvc(client, message):
     usrnum = 0
     usrtxt = ""
     async for usr in client.get_chat_members(chat_id):
-        if not chat_id in spam_chats:
-            break
-        if usr.user.is_bot:
-            continue
-        usrnum += 1
-        usrtxt += f"[{usr.user.first_name}](tg://user?id={usr.user.id}) "
+    if not chat_id in spam_chats:
+        break
+    if usr.user.is_bot:
+        continue
+    usrnum += 1
+    
+    # HTML format for clickable user mention
+    user_mention = f'<a href="tg://user?id={usr.user.id}">{usr.user.first_name}</a>'
+    
+    usrtxt += f"{user_mention} "
 
-        if usrnum == 1:
-            txt = f"{usrtxt} {random.choice(VC_TAG)}"
-            await client.send_message(chat_id, txt)
-            await asyncio.sleep(4)
-            usrnum = 0
-            usrtxt = ""
+    if usrnum == 1:
+        if mode == "text_on_cmd":
+            txt = f"{usrtxt} {random.choice(TAGMES)}"
+            await client.send_message(chat_id, txt, parse_mode="html", disable_web_page_preview=True)
+        elif mode == "text_on_reply":
+            await msg.reply(
+                f'<a href="tg://user?id={usr.user.id}">{random.choice(EMOJI)}</a>',
+                disable_web_page_preview=True
+            )
+        await asyncio.sleep(4)
+        usrnum = 0
+        usrtxt = ""
     try:
         spam_chats.remove(chat_id)
     except:
