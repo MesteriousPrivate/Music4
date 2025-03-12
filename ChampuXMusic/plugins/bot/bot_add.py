@@ -8,12 +8,12 @@ from ChampuXMusic import app
 from ChampuXMusic.utils.database import add_served_chat, get_assistant
 
 photo = [
-    "https://files.catbox.moe/f95xbu.jpg"
-    "https://files.catbox.moe/hdb51t.jpg"
-    "https://files.catbox.moe/7lxfnr.jpg"
-    "https://files.catbox.moe/0kgyjp.jpg"
-    "https://files.catbox.moe/jr829k.jpg"
-    "https://files.catbox.moe/uuy093.jpg"
+    "https://files.catbox.moe/f95xbu.jpg",
+    "https://files.catbox.moe/hdb51t.jpg",
+    "https://files.catbox.moe/7lxfnr.jpg",
+    "https://files.catbox.moe/0kgyjp.jpg",
+    "https://files.catbox.moe/jr829k.jpg",
+    "https://files.catbox.moe/uuy093.jpg",
     "https://files.catbox.moe/c0aamp.jpg"
 ]
 
