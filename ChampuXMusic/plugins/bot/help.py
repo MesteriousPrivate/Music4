@@ -73,7 +73,7 @@ async def help_com_group(client, message: Message, _):
                 message.chat.photo.big_file_id,
             )
         else:
-            group_photo = "https://envs.sh/opn.mp4"
+            group_photo = "https://files.catbox.moe/405czr.jpg"
 
         chat_photo = group_photo if group_photo else "https://envs.sh/opn.mp4"
     except AttributeError:
@@ -92,6 +92,7 @@ async def helper_cb(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
     cb = callback_data.split(None, 1)[1]
     keyboard = help_back_markup(_)
+
     if cb == "hb1":
         await CallbackQuery.edit_message_text(helpers.HELP_1, reply_markup=keyboard)
     elif cb == "hb2":
@@ -122,3 +123,7 @@ async def helper_cb(client, CallbackQuery, _):
         await CallbackQuery.edit_message_text(helpers.HELP_14, reply_markup=keyboard)
     elif cb == "hb15":
         await CallbackQuery.edit_message_text(helpers.HELP_15, reply_markup=keyboard)
+    elif cb == "hb16":
+        await CallbackQuery.edit_message_text(helpers.HELP_16, reply_markup=keyboard)  # Chat GC ON
+    elif cb == "hb17":
+        await CallbackQuery.edit_message_text(helpers.HELP_17, reply_markup=keyboard)  # Chat GC OFF
