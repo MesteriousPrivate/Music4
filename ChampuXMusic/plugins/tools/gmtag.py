@@ -189,21 +189,13 @@ async def mention_allvc(client, message):
     if usr.user.is_bot:
         continue
     usrnum += 1
-    
-    # HTML format for clickable user mention
+
     user_mention = f'<a href="tg://user?id={usr.user.id}">{usr.user.first_name}</a>'
-    
     usrtxt += f"{user_mention} "
 
     if usrnum == 1:
-        if mode == "text_on_cmd":
-            txt = f"{usrtxt} {random.choice(TAGMES)}"
-            await client.send_message(chat_id, txt, parse_mode="html", disable_web_page_preview=True)
-        elif mode == "text_on_reply":
-            await msg.reply(
-                f'<a href="tg://user?id={usr.user.id}">{random.choice(EMOJI)}</a>',
-                disable_web_page_preview=True
-            )
+        txt = f"{usrtxt} {random.choice(TAGMES)}"
+        await client.send_message(chat_id, txt, parse_mode="html", disable_web_page_preview=True)
         await asyncio.sleep(4)
         usrnum = 0
         usrtxt = ""
