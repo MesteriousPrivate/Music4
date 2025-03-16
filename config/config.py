@@ -87,6 +87,9 @@ confirmer = {}
 
 # List of video URLs
 VIDEO_URLS = [
+    "https://envs.sh/oQ7.mp4",
+    "https://envs.sh/mc2.mp4",
+    "https://envs.sh/mcd.mp4",
     "https://envs.sh/vJC.mp4",
     "https://envs.sh/vJ5.mp4",
     "https://envs.sh/vJY.mp4",
@@ -115,6 +118,31 @@ VIDEO_URLS = [
     "https://envs.sh/mvp.mp4",
     "https://envs.sh/mcd.mp4",
     "https://envs.sh/mc2.mp4",
+    "https://files.catbox.moe/u748y2.mp4",
+    "https://files.catbox.moe/edv98k.mp4",
+    "https://files.catbox.moe/ulekbe.mp4",
+    "https://files.catbox.moe/iqcktd.mp4",
+    "https://files.catbox.moe/uonfu6.mp4",
+    "https://files.catbox.moe/sot0ne.mp4",
+    "https://files.catbox.moe/eg9xin.mp4",
+    "https://files.catbox.moe/8wyl3s.mp4",
+    "https://files.catbox.moe/fkttbr.mp4",
+    "https://files.catbox.moe/hj3b2u.mp4",
+    "https://files.catbox.moe/p4j2ui.mp4",
+    "https://files.catbox.moe/i0kwlh.mp4",
+    "https://files.catbox.moe/dl7zd8.mp4",
+    "https://files.catbox.moe/dl7zd8.mp4",
+    "https://files.catbox.moe/dl7zd8.mp4",
+    "https://files.catbox.moe/zl6f1b.mp4",
+    "https://files.catbox.moe/oef20x.mp4",
+    "https://files.catbox.moe/j2sg38.mp4",
+    "https://files.catbox.moe/2ezt4r.mp4",
+    "https://files.catbox.moe/iv1jz5.mp4",
+    "https://files.catbox.moe/7izrxr.mp4",
+    "https://files.catbox.moe/3okiei.mp4",
+    "https://files.catbox.moe/xxlvua.mp4",
+    "https://files.catbox.moe/lj5q24.mp4",
+    "https://files.catbox.moe/azsb9w.mp4"
 ]
 
 # Randomly select a video URL
